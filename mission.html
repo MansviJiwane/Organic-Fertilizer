@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EcoGaon - Our Mission</title>
+
+  <!-- FontAwesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --green: #38b000;
+      --dark-green: #2a6f2b;
+      --light-green: #c7f9cc;
+      --bg: #f4fff8;
+      --white: #fff;
+      --gray: #555;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--gray);
+      scroll-behavior: smooth;
+    }
+
+    /* 🌍 Hero Section with Background Image */
+    .hero {
+      position: relative;
+      height: 100vh;
+      background: url('https://images.unsplash.com/photo-1501004318641-b39e6451bec6') center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      color: white;
+      z-index: 1;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(0, 100, 0, 0.4); /* green overlay */
+      z-index: 0;
+    }
+
+    .hero h1 {
+      font-size: 2.8rem;
+      font-weight: 600;
+      z-index: 2;
+      font-family:'Times New Roman', Times, serif;
+    }
+
+    .hero-animation {
+      width: 260px;
+      height: 260px;
+      animation: floatEarth 4s ease-in-out infinite;
+      
+      z-index: 2;
+      margin-bottom: 1rem;
+    }
+
+    @keyframes floatEarth {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    /* ✨ Section Styling */
+    .mission-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 4rem 2rem;
+      background: var(--white);
+      text-align: center;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 0.8s ease-out;
+      
+    }
+
+    .mission-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .mission-section h2 {
+      color: var(--dark-green);
+      margin-bottom: 1rem;
+      font-size: 2rem;
+      font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+    }
+
+    .mission-section p {
+      max-width: 700px;
+      font-size: 1.1rem;
+    }
+
+    .infographic {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .infographic-step {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 1.1rem;
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    .infographic-step i {
+      font-size: 1.5rem;
+    }
+
+    .cta {
+      background: var(--green);
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      border-radius: 50px;
+      margin-top: 3rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .cta:hover {
+      background: var(--dark-green);
+    }
+    
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: var(--light-green);
+      color: var(--dark-green);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .mission-section h2 {
+        font-size: 1.5rem;
+      }
+
+      .infographic-step {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🌍 Hero Section -->
+  <section class="hero">
+    <div class="hero-animation"></div>
+    <h1>Our Mission
+      <br>
+      Turning Waste into Worth, for a Greener Earth
+    </h1>
+  </section>
+
+  <!-- ✨ Section 1 -->
+  <section class="mission-section" id="save-earth">
+    <h2>1. Save the Earth</h2>
+    <p>Reduce waste, stop pollution, and recycle for a cleaner, greener, and healthier planet. Every bit of waste saved is a step closer to protecting our Earth.</p>
+  </section>
+
+  <!-- ✨ Section 2 -->
+  <section class="mission-section" id="create-organic">
+    <h2>2. Create Organic Food</h2>
+    <p>Transform daily waste into compost that nurtures healthy, chemical-free crops — bringing organic farming closer to every village home.</p>
+  </section>
+
+  <!-- ✨ Section 3 -->
+  <section class="mission-section" id="empower-villages">
+    <h2>3. Empower Villages</h2>
+    <p>Reward villagers with eco-points, inspire action with community-driven composting, and build a circular green economy that benefits all.</p>
+  </section>
+
+  <!-- ✨ Section 4 -->
+  <section class="mission-section" id="future-generations">
+    <h2>4. Future Generations</h2>
+    <p>Leave behind a sustainable legacy. The green Earth we build today will be the foundation for our children's tomorrow.</p>
+  </section>
+
+  <!-- 📊 Infographic -->
+  <section class="mission-section" id="infographic">
+    <h2>Transform Waste Into Wellness</h2>
+    <div class="infographic">
+      <div class="infographic-step">
+        <i class="fas fa-trash"></i>
+        <span>5 kg Waste</span>
+        <i class="fas fa-arrow-right"></i>
+        <i class="fas fa-seedling"></i>
+        <span>3 kg Organic Fertilizer</span>
+        <i class="fas fa-arrow-right"></i>
+        <i class="fas fa-apple-alt"></i>
+        <span>10 kg Healthy Food</span>
+      </div>
+    </div>
+    <button class="cta">Join the Movement</button>
+  </section>
+
+  <!-- ✍️ CTA Footer -->
+  <footer>
+    Together, we recycle waste, protect the Earth, and grow organic food for a better tomorrow. <br/>© 2025 EcoGaon.
+  </footer>
+
+  <!-- JS: Scroll-triggered animation -->
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll('.mission-section').forEach(section => {
+      observer.observe(section);
+    });
+  </script>
+
+</body>
+</html>
