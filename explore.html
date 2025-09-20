@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Explore Features | EcoFertility</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  
+  <!-- Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #d6f0d6, #f0faf0);
+      color: #2c4a32;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 {
+      font-weight: 700;
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+      color: #2c4a32;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+    }
+    p.subtitle {
+      font-weight: 400;
+      font-size: 1.2rem;
+      color: #446c45;
+      margin-bottom: 3rem;
+      max-width: 600px;
+      text-align: center;
+      text-shadow: 1px 1px 2px rgba(255,255,255,0.7);
+    }
+    .cards-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      max-width: 1000px;
+      width: 100%;
+    }
+    .feature-card {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow: hidden;
+    }
+    .feature-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 14px 30px rgba(0,0,0,0.15);
+    }
+    .feature-img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      filter: brightness(0.9);
+      transition: filter 0.3s ease;
+    }
+    .feature-card:hover .feature-img {
+      filter: brightness(1);
+    }
+    .feature-content {
+      padding: 1.5rem 1.2rem 2rem;
+      text-align: center;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.8rem;
+      color: #4caf50;
+    }
+    .feature-title {
+      font-weight: 600;
+      font-size: 1.4rem;
+      margin-bottom: 0.4rem;
+      color: #2c4a32;
+    }
+    .feature-description {
+      font-size: 1rem;
+      color: #556b4f;
+      line-height: 1.4;
+      min-height: 50px;
+    }
+
+    /* Different icon colors */
+    .dumping .feature-icon { color: #607d8b; }
+    .ecowallet .feature-icon { color: #2196f3; }
+    .bioscanner .feature-icon { color: #ff9800; }
+    .dashboard .feature-icon { color: #9c27b0; }
+    .sms .feature-icon { color: #00bcd4; }
+    .operator .feature-icon { color: #f44336; }
+
+    /* Link styles inside feature-title */
+    .feature-title a {
+      color: inherit;
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+    .feature-title a:hover {
+      color: #4caf50;
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      .feature-card {
+        max-width: 100%;
+      }
+      h1 {
+        font-size: 2.2rem;
+      }
+      p.subtitle {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Explore Our Platform Features</h1>
+  <p class="subtitle">Click on any feature to learn more or access it.</p>
+
+  <div class="cards-container">
+    <div class="feature-card dumping" onclick="handleFeature('Dumping Point')">
+      <img
+        class="feature-img"
+        src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80"
+        alt="Dumping Point"
+      />
+      <div class="feature-content">
+        <i class="fas fa-dumpster feature-icon"></i>
+        <h3 class="feature-title"><a href="dumping point.html">Dumping Point</a></h3>
+        <p class="feature-description">Efficient waste disposal areas for environmental safety.</p>
+      </div>
+    </div>
+
+    <div class="feature-card ecowallet" onclick="handleFeature('EcoWallet')">
+      <img
+        class="feature-img"
+        src="https://cdn.dribbble.com/users/9533381/screenshots/17318870/media/23883d05400ccc1c21c0b876c8b2930d.jpg"
+        alt="EcoWallet"
+      />
+      <div class="feature-content">
+        <i class="fas fa-wallet feature-icon"></i>
+        <h3 class="feature-title"><a href="ecowallet.html">Ecowallet</a></h3>
+        <p class="feature-description">Digital wallet to track your eco-friendly transactions.</p>
+      </div>
+    </div>
+
+    <div class="feature-card bioscanner" onclick="handleFeature('BioBloom Scanner')">
+      <img
+        class="feature-img"
+        src="https://www.itl.cat/pngfile/big/148-1482727_scanner-wallpaper-wallpaper.jpg"
+        alt="BioBloom Scanner"
+      />
+      <div class="feature-content">
+        <i class="fas fa-microscope feature-icon"></i>
+        <h3 class="feature-title"><a href="bio.html">BioBloom Scanner</a></h3>
+        <p class="feature-description">Advanced scanner to analyze organic materials and soil health.</p>
+      </div>
+    </div>
+
+    <div class="feature-card dashboard" onclick="handleFeature('Admin Dashboard')">
+      <img
+        class="feature-img"
+        src="https://images.unsplash.com/photo-1556740749-887f6717d7e4?auto=format&fit=crop&w=600&q=80"
+        alt="Admin Dashboard"
+      />
+      <div class="feature-content">
+        <i class="fas fa-chart-line feature-icon"></i>
+        <h3 class="feature-title"><a href="admin-dashboard.html">Admin Dashboard</a></h3>
+        <p class="feature-description">Monitor, manage, and optimize platform operations.</p>
+      </div>
+    </div>
+
+    <div class="feature-card sms" onclick="handleFeature('SMS Alerts')">
+      <img
+        class="feature-img"
+        src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=600&q=80"
+        alt="SMS Alerts"
+      />
+      <div class="feature-content">
+        <i class="fas fa-sms feature-icon"></i>
+        <h3 class="feature-title"><a href="sms.html">SMS Alerts</a></h3>
+        <p class="feature-description">Stay updated with instant SMS notifications and alerts.</p>
+      </div>
+    </div>
+
+    <div class="feature-card operator" onclick="handleFeature('Operator Verification')">
+      <img
+        class="feature-img"
+        src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=600&q=80"
+        alt="Operator Verification"
+      />
+      <div class="feature-content">
+        <i class="fas fa-user-check feature-icon"></i>
+        <h3 class="feature-title"><a href="operator-verification.html">Operator Verification</a></h3>
+        <p class="feature-description">Secure verification process for authorized operators.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Prevent clicking the <a> link from triggering the card's onclick
+    document.querySelectorAll('.feature-title a').forEach(link => {
+      link.addEventListener('click', e => e.stopPropagation());
+    });
+
+    function handleFeature(name) {
+      alert(`You clicked on "${name}"! Feature coming soon.`);
+      // You can add real navigation or modal here if needed
+    }
+  </script>
+
+</body>
+</html>
