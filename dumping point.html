@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>EcoGaon Dumping Points</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<style>
+body { margin:0; font-family: Arial,sans-serif; background:#f4fff4; }
+header { background: green; color: white; padding: 15px; text-align: center; font-size: 22px; font-weight: bold; }
+#map { width: 100%; height: 500px; }
+.leaflet-popup-content-wrapper { border-radius:12px; }
+</style>
+</head>
+<body>
+
+<header>🌱 EcoGaon - Village Dumping Points</header>
+<div id="map"></div>
+
+<script>
+const dumpingPoints = [
+  {name:"Dumping Point 1 – Panchayat Office", lat:20.745, lng:78.602, nextDrive:"Tomorrow, 10:30 AM"},
+  {name:"Dumping Point 2 – Main Market", lat:20.746, lng:78.605, nextDrive:"Tomorrow, 11:00 AM"},
+  {name:"Dumping Point 3 – Primary School", lat:20.744, lng:78.607, nextDrive:"Tomorrow, 11:30 AM"},
+  {name:"Dumping Point 4 – Bus Stop", lat:20.743, lng:78.603, nextDrive:"Tomorrow, 12:00 PM"},
+  {name:"Dumping Point 5 – Village Temple", lat:20.747, lng:78.604, nextDrive:"Tomorrow, 12:30 PM"},
+  {name:"Dumping Point 6 – Health Centre", lat:20.742, lng:78.606, nextDrive:"Tomorrow, 1:00 PM"}
+];
+
+// Initialize map
+const map = L.map('map').setView([20.745,78.603], 15);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+  attribution:'© OpenStreetMap contributors'
+}).addTo(map);
+
+// Add markers
+dumpingPoints.forEach(dp => {
+  const marker = L.marker([dp.lat, dp.lng]).addTo(map);
+  
+  marker.on('click', () => {
+    const capacity = Math.floor(Math.random()*101);
+    let status = capacity<=50? 'Available' : capacity<=80? 'Almost Full' : 'Full';
+    const html = `<b>${dp.name}</b><br>🗓 Next Collection Drive: ${dp.nextDrive}<br>Status: ${status} (${capacity}%)`;
+    marker.bindPopup(html).openPopup();
+  });
+});
+</script>
+
+</body>
+</html>
