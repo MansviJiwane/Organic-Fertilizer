@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us | GreenGrow Fertilizers</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap');
+
+    :root {
+      --primary-color: #4B8F4B;
+      --secondary-color: #A3C293;
+      --background-color: #f9f9f6;
+      --text-color: #2f2f2f;
+      --accent-color: #7E9C6F;
+      --light: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+
+    /* HERO SECTION */
+    .hero {
+      position: relative;
+      background: url('https://wallpapercave.com/wp/wp3279322.jpg') no-repeat center center/cover;
+      height: 80vh;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 70, 32, 0.5);
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 2rem;
+    }
+
+    .hero-content h1 {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    /* ABOUT SECTION */
+    .about-section {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      padding: 4rem 2rem;
+      max-width: 1200px;
+      margin: auto;
+      gap: 2rem;
+    }
+
+    .about-text {
+      flex: 1;
+    }
+
+    .about-text h2 {
+      color: var(--primary-color);
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .about-text p {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+
+    .about-img {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+
+    .about-img img {
+      width: 300px;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 8px solid var(--secondary-color);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      transition: transform 0.4s ease;
+    }
+
+    .about-img img:hover {
+      transform: scale(1.05);
+    }
+
+    /* VALUES SECTION */
+    .values {
+      background-color: var(--secondary-color);
+      color: white;
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+
+    .values h3 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .values-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+    }
+
+    .value-card {
+      background: var(--light);
+      color: var(--text-color);
+      padding: 1.5rem;
+      border-radius: 10px;
+      width: 280px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .value-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .value-card h4 {
+      color: var(--accent-color);
+      margin-bottom: 0.5rem;
+    }
+
+    /* TEAM SECTION */
+    .team {
+      padding: 4rem 2rem;
+      background-color: var(--background-color);
+      text-align: center;
+    }
+
+    .team h3 {
+      font-size: 2rem;
+      color: var(--primary-color);
+      margin-bottom: 2rem;
+    }
+
+    .team-members {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+    }
+
+    .team-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+      max-width: 250px;
+      transition: transform 0.3s ease;
+    }
+
+    .team-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .team-card img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+      border: 4px solid var(--secondary-color);
+    }
+
+    .team-card h4 {
+      margin-bottom: 0.3rem;
+      color: var(--accent-color);
+    }
+
+    .team-card .role {
+      font-size: 0.95rem;
+      color: #666;
+      font-style: italic;
+      margin-bottom: 0.5rem;
+    }
+
+    /* FOOTER */
+    footer {
+      background-color: var(--primary-color);
+      color: #fff;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .about-section {
+        flex-direction: column;
+      }
+      .hero-content h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>About GreenGrow</h1>
+      <p>Rooted in nature, growing the future. We craft organic fertilizers that help your soil and soul thrive.</p>
+    </div>
+  </section>
+
+  <!-- ABOUT SECTION -->
+  <section class="about-section">
+    <div class="about-text">
+      <h2>Our Philosophy</h2>
+      <p>
+        GreenGrow was born from the belief that the Earth deserves better. Our organic fertilizers are crafted using all-natural ingredients, designed to enrich your soil without harming the environment.
+      </p>
+      <p>
+        We collaborate with sustainable farms and eco-researchers to continuously innovate and remain aligned with nature's rhythms.
+      </p>
+    </div>
+    <div class="about-img">
+      <img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=500&q=80" alt="Our Team">
+    </div>
+  </section>
+
+  <!-- VALUES SECTION -->
+  <section class="values">
+    <h3>Our Core Values</h3>
+    <div class="values-list">
+      <div class="value-card">
+        <h4>Earth First</h4>
+        <p>Everything we do is with the planet in mind — from packaging to production.</p>
+      </div>
+      <div class="value-card">
+        <h4>Community Roots</h4>
+        <p>We work hand-in-hand with local farmers and communities to support sustainable agriculture.</p>
+      </div>
+      <div class="value-card">
+        <h4>Integrity</h4>
+        <p>No chemicals. No shortcuts. Just pure organic goodness you can trust.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM SECTION -->
+  <section class="team">
+    <h3>Meet Our Team</h3>
+    <div class="team-members">
+
+      <!-- Member 1 -->
+      <div class="team-card">
+        <img src="https://tse3.mm.bing.net/th/id/OIP.QmFhD8xWlnexmux5KRB07gHaGh?pid=Api&P=0&h=180" alt="Anjali">
+        <h4>Anjali</h4>
+        <p class="role">Founder & Soil Scientist</p>
+        <p>Anjali leads our vision for regenerative agriculture and has 15+ years in organic farming.</p>
+      </div>
+ <!-- Member 2 -->
+      <div class="team-card">
+        <img src="https://static.vecteezy.com/system/resources/previews/025/003/253/non_2x/cute-cartoon-girl-student-character-on-transparent-background-generative-ai-png.png" alt="Ishwari">
+        <h4>Ishwari</h4>
+        <p class="role">Founder & Soil Scientist</p>
+        <p>Ishwari leads our vision for regenerative agriculture and has 15+ years in organic farming.</p>
+      </div>
+       <!-- Member 3 -->
+      <div class="team-card">
+        <img src="https://tse1.mm.bing.net/th/id/OIF.5edeLNdcPDos0dcYdmjOgw?pid=Api&P=0&h=180" alt="Mansvi">
+        <h4>Mansvi</h4>
+        <p class="role">Founder & Soil Scientist</p>
+        <p>Mansvi leads our vision for regenerative agriculture and has 15+ years in organic farming.</p>
+      </div>
+       <!-- Member 4 -->
+      <div class="team-card">
+        <img src="https://img.freepik.com/premium-vector/vector-cute-girl-cartoon-illustration-logo-design_1241361-117.jpg" alt="Jeeya">
+        <h4>Jeeya</h4>
+        <p class="role">Founder & Soil Scientist</p>
+        <p>Jeeya leads our vision for regenerative agriculture and has 15+ years in organic farming.</p>
+      </div>
