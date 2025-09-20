@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Dashboard - Ecogaon</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      --green: #2e8b57;
+      --greenSoft: #7bbf6a;
+      --earth: #f4fff4;
+      --cta: #ff8c42;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #f0fff4, #e6ffe6);
+      min-height: 100vh;
+      padding: 2rem;
+      color: #2e8b57;
+    }
+
+    .header {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .header h1 {
+      color: var(--green);
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--green);
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .users-section {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      color: var(--green);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      justify-content: space-between;
+    }
+
+    .refresh-btn {
+      background: var(--green);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+    .refresh-btn:hover {
+      background: #228b22;
+    }
+
+    .users-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    .users-table th,
+    .users-table td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+
+    .users-table th {
+      background: var(--earth);
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    .users-table tr:hover {
+      background: var(--earth);
+    }
+
+    .role-badge {
+      padding: 0.25rem 0.75rem;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: capitalize;
+      display: inline-block;
+    }
+
+    .role-household {
+      background: #e3f2fd;
+      color: #1976d2;
+    }
+    .role-farmer {
+      background: #e8f5e8;
+      color: #2e7d32;
+    }
+    .role-buyer {
+      background: #fff3e0;
+      color: #f57c00;
+    }
+    .role-krushikendra {
+      background: #f3e5f5;
+      color: #7b1fa2;
+    }
+    .role-admin {
+      background: #ffebee;
+      color: #c62828;
+    }
+    .role-truck_driver {
+      background: #e0f2f1;
+      color: #00695c;
+    }
+    .role-compost_operator {
+      background: #f1f8e9;
+      color: #558b2f;
+    }
+    .role-dumping_manager {
+      background: #e8eaf6;
+      color: #3f51b5;
+    }
+
+    .loading {
+      text-align: center;
+      color: #666;
+      padding: 2rem;
+      font-style: italic;
+    }
+
+    @media (max-width: 768px) {
+      .users-table {
+        font-size: 0.8rem;
+      }
+
+      .users-table th,
+      .users-table td {
+        padding: 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🌱 Admin Dashboard</h1>
+    <p>View all registered users and system statistics</p>
+  </div>
+
+  <div class="stats-grid" id="statsGrid">
+    <div class="stat-card">
+      <div class="stat-number" id="totalUsers">-</div>
+      <div class="stat-label">Total Users</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" id="householdUsers">-</div>
+      <div class="stat-label">Households</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" id="farmerUsers">-</div>
+      <div class="stat-label">Farmers</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" id="buyerUsers">-</div>
+      <div class="stat-label">Buyers</div>
+    </div>
+  </div>
+
+  <div class="users-section">
+    <div class="section-title">
+      <span>👥 All Registered Users</span>
+      <button class="refresh-btn" onclick="loadUsers()">🔄 Refresh</button>
+    </div>
+
+    <div id="usersTable">
+      <div class="loading">Loading users...</div>
+    </div>
+  </div>
+
+  <script>
+    // Mock data for users
+    const mockUsers = [
+      {
+        id: 1,
+        name: "Ravi Kumar",
+        phone: "9876543210",
+        role: "household",
+        ecoscore: 80,
+        totalWaste: 10,
+        registeredAt: "2025-09-15T08:30:00Z",
+      },
+      {
+        id: 2,
+        name: "Sita Devi",
+        phone: "9876512345",
+        role: "farmer",
+        ecoscore: 90,
+        totalWaste: 5,
+        registeredAt: "2025-09-10T12:00:00Z",
+      },
+      {
+        id: 3,
+        name: "Rahul Singh",
+        phone: "9876598765",
+        role: "buyer",
+        ecoscore: 75,
+        totalWaste: 2,
+        registeredAt: "2025-09-20T14:00:00Z",
+      },
+      {
+        id: 4,
+        name: "Anita Sharma",
+        phone: "9876501234",
+        role: "admin",
+        ecoscore: 95,
+        totalWaste: 0,
+        registeredAt: "2024-01-01T10:00:00Z",
+      },
+    ];
+
+    function loadUserStats() {
+      // Calculate stats from mockUsers data
+      const totalUsers = mockUsers.length;
+
+      const roleStats = mockUsers.reduce(
+        (acc, user) => {
+          acc[user.role] = (acc[user.role] || 0) + 1;
+          return acc;
+        },
+        {}
+      );
+
+      document.getElementById("totalUsers").textContent = totalUsers;
+      document.getElementById("householdUsers").textContent = roleStats.household || 0;
+      document.getElementById("farmerUsers").textContent = roleStats.farmer || 0;
+      document.getElementById("buyerUsers").textContent = roleStats.buyer || 0;
+    }
+
+    function loadUsers() {
+      const usersTable = document.getElementById("usersTable");
+
+      if (mockUsers.length === 0) {
+        usersTable.innerHTML = '<div class="loading">No users registered yet.</div>';
+        return;
+      }
+
+      const tableHTML = `
+        <table class="users-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Role</th>
+              <th>Ecoscore</th>
+              <th>Total Waste (kg)</th>
+              <th>Registered Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${mockUsers
+              .map(
+                (user) => `
+              <tr>
+                <td>${user.id}</td>
+                <td>${user.name}</td>
+                <td>${user.phone}</td>
+                <td>
+                  <span class="role-badge role-${user.role.replace(/_/g, "-")}">${user.role.replace(/_/g, " ")}</span>
+                </td>
+                <td>${user.ecoscore}/100</td>
+                <td>${user.totalWaste}</td>
+                <td>${new Date(user.registeredAt).toLocaleDateString()}</td>
+              </tr>
+            `
+              )
+              .join("")}
+          </tbody>
+        </table>
+      `;
+
+      usersTable.innerHTML = tableHTML;
+    }
+
+    // Load data on page load
+    loadUserStats();
+    loadUsers();
+  </script>
+</body>
+</html>
