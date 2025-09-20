@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us | NatureGro Fertilizers</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    body {
+      background: url('https://images.unsplash.com/photo-1606857521015-d0f274f3d9a3?auto=format&fit=crop&w=1600&q=60') no-repeat center center fixed;
+      background-size: cover;
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .contact-card {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 16px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+      display: flex;
+      overflow: hidden;
+      max-width: 950px;
+      width: 90%;
+      animation: fadeIn 1s ease-in;
+    }
+
+    .left {
+      flex: 1;
+      padding: 50px 40px;
+      background: linear-gradient(to bottom right, #d8f3dc, #b7e4c7);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .left h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      color: #2d6a4f;
+      margin-bottom: 20px;
+    }
+
+    .left p {
+      color: #355f4b;
+      margin-bottom: 30px;
+      font-size: 15px;
+    }
+
+    .left form input,
+    .left form textarea {
+      width: 100%;
+      padding: 14px 16px;
+      margin-bottom: 18px;
+      border: none;
+      border-radius: 8px;
+      background-color: #e9f5ee;
+      font-size: 15px;
+      transition: 0.3s ease;
+    }
+
+    .left form input:focus,
+    .left form textarea:focus {
+      outline: none;
+      background-color: #ffffff;
+      box-shadow: 0 0 0 2px #95d5b2;
+    }
+
+    .left form textarea {
+      resize: vertical;
+      height: 120px;
+    }
+
+    .left form button {
+      background-color: #52b788;
+      color: white;
+      padding: 12px 22px;
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .left form button:hover {
+      background-color: #40916c;
+    }
+
+    .right {
+      flex: 1;
+      background: url('https://i.pinimg.com/736x/6d/ca/f3/6dcaf37868a7f5116bc6cb15853a0a15.jpg')no-repeat center center;
+      background-size: cover;
+      position: relative;
+    }
+
+    .right::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(34, 94, 67, 0.3);
+    }
+
+    .right .info-box {
+      position: absolute;
+      bottom: 30px;
+      left: 30px;
+      background: rgba(255, 255, 255, 0.85);
+      padding: 15px 20px;
+      border-radius: 10px;
+      z-index: 1;
+    }
+
+    .right .info-box h3 {
+      font-size: 18px;
+      color: #2d6a4f;
+      margin-bottom: 5px;
+    }
+
+    .right .info-box p {
+      font-size: 14px;
+      color: #495057;
+    }
+
+    @media (max-width: 768px) {
+      .contact-card {
+        flex-direction: column;
+      }
+
+      .right {
+        height: 250px;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="contact-card">
+    <!-- Left Side -->
+    <div class="left">
+      <h1>Let’s Grow Together 🌱</h1>
+      
+
+      <form>
+        <input type="text" placeholder="Your Full Name" required>
+        <input type="email" placeholder="Your Email Address" required>
+        <textarea placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+
+    <!-- Right Side -->
+    <div class="right">
+      <div class="info-box">
+        <h3>NatureGro HQ</h3>
+        <p>📍 Nagpur , Maharashtra</p>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
