@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Compost DNA - Admin Dashboard</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
+
+    :root {
+      --color-bg: #a4eef8;
+      --color-card-bg: transparent;
+      --color-dark: #fafbfd;
+      --color-mid: #d98c5f;
+      --color-light: #b6f5a5;
+      --color-highlight: #66a7d8;
+      --color-error: #d94a44;
+      --color-success: #09ef3e;
+      --transition-speed: 0.3s;
+      --input-padding: 12px 16px;
+      --border-radius: 12px;
+    }
+
+    body {
+      background: var(--color-bg);
+      color: var(--color-dark);
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      background-image: url('https://www.pixelstalk.net/wp-content/uploads/2016/11/Earth-From-Space-HD-Backgrounds.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center center;
+      filter: saturate(0.75) brightness(0.9);
+    }
+
+    #admin-dashboard {
+      background: var(--color-card-bg);
+      border-radius: var(--border-radius);
+      padding: 2.5rem 3rem;
+      max-width: 480px;
+      width: 100%;
+      box-shadow:
+        0 12px 25px rgba(107, 66, 38, 0.3),
+        inset 0 0 12px rgba(217, 140, 95, 0.25);
+      backdrop-filter: blur(8px);
+      border: 1.5px solid rgba(233, 197, 163, 0.6);
+    }
+
+    h2 {
+      margin: 0 0 1.5rem;
+      font-weight: 600;
+      font-size: 1.8rem;
+      color: var(--color-highlight);
+      text-align: center;
+      letter-spacing: 1.2px;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    label {
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--color-dark);
+      user-select: none;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="url"],
+    textarea {
+      background: #fff;
+      border: 2px solid var(--color-light);
+      border-radius: var(--border-radius);
+      padding: var(--input-padding);
+      font-size: 1rem;
+      color: var(--color-dark);
+      transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+      font-family: 'Poppins', sans-serif;
+      resize: vertical;
+      min-height: 38px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    input[type="text"]:focus,
+    input[type="date"]:focus,
+    input[type="url"]:focus,
+    textarea:focus {
+      border-color: var(--color-highlight);
+      box-shadow: 0 0 12px var(--color-highlight);
+      outline: none;
+      background: #fff6f1;
+    }
+
+    textarea {
+      min-height: 72px;
+    }
+
+    input[type="checkbox"] {
+      margin-left: 10px;
+      transform: scale(1.3);
+      vertical-align: middle;
+      cursor: pointer;
+      accent-color: var(--color-highlight);
+      filter: drop-shadow(0 0 1px var(--color-highlight));
+    }
+
+    button {
+      background: var(--color-highlight);
+      border: none;
+      padding: 14px;
+      border-radius: var(--border-radius);
+      font-weight: 700;
+      font-size: 1.15rem;
+      cursor: pointer;
+      color: #fff;
+      box-shadow: 0 0 15px var(--color-highlight);
+      transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
+      user-select: none;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    button:hover,
+    button:focus {
+      background: #3a59af;
+      box-shadow: 0 0 25px #6b90f6;
+      outline: none;
+    }
+
+    #status {
+      margin-top: 1.5rem;
+      font-weight: 600;
+      font-size: 1rem;
+      text-align: center;
+      min-height: 1.3rem;
+      user-select: none;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      color: var(--color-success);
+      font-family: 'Poppins', sans-serif;
+    }
+
+    #status.error {
+      color: var(--color-error);
+    }
+
+    #status.visible {
+      opacity: 1;
+    }
+
+    /* Popup styles */
+    #popup {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(30px);
+      background-color: var(--color-success);
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: var(--border-radius);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      font-weight: 700;
+      font-family: 'Poppins', sans-serif;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      z-index: 1000;
+      user-select: none;
+    }
+
+    #popup.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 540px) {
+      #admin-dashboard {
+        padding: 2rem 1.5rem;
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section id="admin-dashboard" role="region" aria-labelledby="dashboard-title">
+    <h2 id="dashboard-title">Admin Dashboard - Product Availability</h2>
+    <form id="availabilityForm" aria-describedby="formStatus" novalidate>
+      <label for="productName">Product Name:</label>
+      <input type="text" id="productName" name="productName" required aria-required="true" placeholder="E.g. Compost DNA Batch A" />
+
+      <label for="date">Date:</label>
+      <input type="date" id="date" name="date" required aria-required="true" />
+
+      <label for="link">Product Link:</label>
+      <input type="url" id="link" name="link" placeholder="https://example.com" />
+
+      <label for="message">Optional Message:</label>
+      <textarea id="message" name="message" rows="3" placeholder="Additional notes..."></textarea>
+
+      <label>
+        Send SMS Now:
+        <input type="checkbox" id="sendSms" name="sendSms" aria-checked="false" />
+      </label>
+
+      <button type="submit" aria-live="polite" aria-busy="false">Submit</button>
+    </form>
+    <p id="status" role="alert" aria-live="assertive" aria-atomic="true"></p>
+  </section>
+
+  <div id="popup" role="alert" aria-live="assertive" aria-atomic="true">Information sent successfully!</div>
+
+  <script>
+    (() => {
+      const form = document.getElementById('availabilityForm');
+      const status = document.getElementById('status');
+      const button = form.querySelector('button[type="submit"]');
+      const popup = document.getElementById('popup');
+      let popupTimeout;
+
+      function setStatus(text, isError = false) {
+        status.textContent = text;
+        status.classList.toggle('error', isError);
+        status.classList.add('visible');
+      }
+
+      function clearStatus() {
+        status.textContent = '';
+        status.classList.remove('error', 'visible');
+      }
+
+      function showPopup(message) {
+        if(popupTimeout) clearTimeout(popupTimeout);
+        popup.textContent = message;
+        popup.classList.add('show');
+        popupTimeout = setTimeout(() => {
+          popup.classList.remove('show');
+        }, 3000);
+      }
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        clearStatus();
+
+        button.disabled = true;
+        button.setAttribute('aria-busy', 'true');
+        setStatus('Sending...');
+
+        const data = {
+          productName: form.productName.value.trim(),
+          date: form.date.value,
+          link: form.link.value.trim(),
+          message: form.message.value.trim(),
+          sendSms: form.sendSms.checked,
+        };
+
+        // For demo, I'll simulate successful response after 1.5s delay.
+        // Replace with actual fetch() to your backend API.
+        try {
+          await new Promise(resolve => setTimeout(resolve, 1500));
+          
+          // If you want to test error, uncomment below
+          // throw new Error("Simulated server error");
+
+          setStatus('Product availability updated successfully!');
+          form.reset();
+          showPopup('Information sent successfully!');
+        } catch (error) {
+          setStatus(error.message || 'Failed to send data.', true);
+        } finally {
+          button.disabled = false;
+          button.setAttribute('aria-busy', 'false');
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
