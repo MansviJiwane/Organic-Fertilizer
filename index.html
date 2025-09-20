@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ecogaon Home page</title>
+  <link rel="stylesheet" href="home.css">
+  <style>
+    body{
+      background-color: #d6f8d9; /* light green background */
+
+    }
+
+   .process{
+    
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #e6ffe6, #f9fff9);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 10px;
+    }
+
+    h2 {
+      color: #2e7d32;
+      margin-bottom: 20px;
+    }
+
+    .flow-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      position: relative;
+      gap: 20px;
+    }
+
+    .step {
+      flex: 1 1 22%;
+      min-width: 140px;
+      max-width: 160px;
+      text-align: center;
+      position: relative;
+      opacity: 0.4;
+      transition: 0.5s;
+    }
+
+    .step.active {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+
+    .step video, .step img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      border: 2px solid #4caf50;
+      background: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.15);
+    }
+
+    .label {
+      margin-top: 8px;
+      font-weight: bold;
+      color: #33691e;
+    }
+
+    .indicator {
+      position: absolute;
+      top: -25px;
+      width: 40px;
+      height: 40px;
+      background: url('https://cdn-icons-png.flaticon.com/512/2909/2909767.png') no-repeat center center;
+      background-size: contain;
+      transition: left 0.5s ease;
+      z-index: 10;
+    }
+
+    .arrow-line {
+      position: absolute;
+      top: 60px;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(to right, #66bb6a, #a5d6a7);
+      z-index: 1;
+      border-radius: 2px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .flow-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      .step {
+        width: 80%;
+        max-width: 300px;
+        opacity: 1 !important;
+      }
+      .arrow-line, .indicator {
+        display: none;
+      }
+    }
+    /* Container and text styling */
+#processD {
+  text-align: center;
+  width: 320px;
+  margin: 40px auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  
+
+}
+
+#processD h2 {
+  white-space: nowrap;  /* Heading ko ek line me rakhega */
+  font-size: 28px;      /* Agar chahiye to font size adjust karo */
+  margin-bottom: 40px;
+  font-weight: 700;
+  color: #1b5e20;
+  user-select: text;
+  text-align: center;
+}
+
+
+/* Rotating box container */
+.rotating-box {
+  width: 280px;
+  height: 280px;
+  margin: 0 auto;
+  perspective: 1100px;
+  outline: none;
+}
+
+/* Inner rotating part */
+.rotating-box .inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: spinCW 18s linear infinite;
+  transition: transform 0.6s ease;
+  cursor: grab;
+}
+
+/* Pause animation on hover */
+.rotating-box:hover .inner {
+  animation-play-state: paused;
+}
+
+/* Each face/cell */
+.cell {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  left: 50%;
+  top: 50%;
+  margin: -75px 0 0 -75px;
+  background: #fff;
+  border-radius: 16px;
+  border: 3px solid #4caf50;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  backface-visibility: hidden;
+  transform: rotateY(var(--rot)) translateZ(250px);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+  user-select: none;
+}
+
+/* Images inside cells */
+.cell img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin-bottom: 12px;
+  pointer-events: none;
+}
+
+/* Labels inside cells */
+.cell span {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1b5e20;
+  text-align: center;
+  pointer-events: none;
+}
+
+/* Highlight active cell */
+.cell.active {
+  border-color: #1b5e20;
+  box-shadow: 0 0 24px #1b5e20;
+  transform: scale(1.15) translateZ(260px) !important;
+  z-index: 10;
+}
+
+/* Rotation keyframe - clockwise */
+@keyframes spinCW {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(-360deg); /* Negative for clockwise */
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  #processD {
+    width: 100%;
+    padding: 0 10px;
+    background-color: #d6f8d9;
+  }
+  .rotating-box {
+    width: 220px;
+    height: 220px;
+  }
+  .cell {
+    width: 120px;
+    height: 120px;
+    margin: -60px 0 0 -60px;
+  }
+  .cell img {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 8px;
+  }
+  .cell span {
+    font-size: 14px;
+  }
+}
+#review-section{
+  background-color: #66bb6a;
+}
+
+   </style>
+</head>
+<body>
+  
+  <!-- Header Section -->
+  
+  <header class="hero"> 
+    <nav class="navbar">
+      <div class="logo"> <img src="https://png.pngtree.com/png-clipart/20220719/original/pngtree-simple-100-eco-round-badge-banner-free-clipart-png-image_8362213.png ">
+              
+      <ul class="nav-links">
+        <li><a href="home.html">Home</a></li>
+        <li><a href="mission.html">Mission</a></li>
+        <li><a href="explore.html">Explore</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="aboutus.html">About Us </a></li>
+
+        <li><a href="login.html" class="signup-btn">Sign Up</a></li> 
+      </ul>
+    </div></nav>
+    <div class="hero-content">
+      
+      <div class="search-container">
+        <div class="search-fields">
+            <b><i>
+          EcoGaon <br>
+         Sustainable Gaon, Organic Bharat - Let's Turn Waste Into Wealth.</i></b>
+        </div><br><br>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Highlights Section -->
+  <section class="highlights">
+    <div class="highlight">
+      <img src="https://img.freepik.com/premium-vector/tree-with-leaves-template-logo-design-badges-labels-logos-your-business-plants-nature-ecology-white-tree-green-circle-vector-illustration_517145-182.jpg" width="80px" height="70px">
+      <h3> Organic Gold</h3>
+      <p>Compost your waste, boost your harvest</p>
+    </div>
+    <div class="highlight">
+      <img src="https://static.vecteezy.com/system/resources/previews/049/808/266/non_2x/sustainability-earth-hand-care-logo-icons-free-png.png" width="80px" height="70px">
+      <h3> Eco Ally </h3>
+      <p>Together with Farmers for a Greener, Prosperous Future</p>
+    </div>
+    <div class="highlight">
+     <img src="https://png.pngtree.com/png-vector/20220516/ourmid/pngtree-clover-green-circle-icon-design-day-leaf-flat-vector-png-image_36543302.png" width="80px" height="70px">
+      <h3> Prosperity</h3>
+      <p>Empowering Farmers Digitally & Organically</p>
+    </div>
+    <div class="highlight">
+
+      <img src="https://goriteway.com/wp-content/uploads/go-riteway-icons-03-1-640x639.png" width="80px"height="70px">
+            <h3>Visionary</h3>
+      <p>From Soil to Success</p>
+    </div>
+  </section>
+  
+  <section id="processD" aria-label="3D rotating process flow">
+    <h2><b>Process Flow Of Organic Fertilizer</h2>
+    <div class="rotating-box" tabindex="0" aria-describedby="processDesc">
+      <div class="inner" id="rotatingInner">
+        <div class="cell" style="--rot: 0deg;" data-step="1" tabindex="0" aria-label="Waste Collection">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYCyUIpx0hFwNIF-0NtxYj-jX12AcIFgTKjg&s" alt="Waste Collection Icon"  />
+          <span>Waste Collection</span>
+        </div>
+        <div class="cell" style="--rot: 60deg;" data-step="2" tabindex="0" aria-label="Segregation">
+          <img src="https://climeto.com/wp-content/uploads/2025/03/waste-blog-image.jpg" alt="Segregation Icon" loading="lazy" />
+          <span>Segregation</span>
+        </div>
+        <div class="cell" style="--rot: 120deg;" data-step="3" tabindex="0" aria-label="Composting">
+          <img src="https://drop.ndtv.com/albums/NEWS/composting-1/5simplestepstoturnhouseholdwasteintocompos(2).jpg" alt="Composting Icon" loading="lazy" />
+          <span>Composting</span>
+        </div>
+        <div class="cell" style="--rot: 180deg;" data-step="4" tabindex="0" aria-label="Drying and Curing">
+          <img src="https://www.fertilizerdryer.com/wp-content/uploads/2023/09/Materials-for-The-Cocurrent-Drying-Technique.png" alt="Drying and Curing Icon" loading="lazy" />
+          <span>Drying & Curing</span>
+        </div>
+        <div class="cell" style="--rot: 240deg;" data-step="5" tabindex="0" aria-label="Packaging">
+          <img src="https://i0.wp.com/logosendiri.com/wp-content/uploads/2022/11/Flatlay-August-7-02-01-768x768-1.jpeg?fit=768%2C768&ssl=1" alt="Packaging Icon" loading="lazy" />
+          <span>Packaging</span>
+        </div>
+        <div class="cell" style="--rot: 300deg;" data-step="6" tabindex="0" aria-label="Fertilizer Ready">
+          <img src="https://greenparadiselive.com/cdn/shop/products/GardenFoodOrganicFertilizerandManurebyPradhan_1Kg.jpg?v=1617882489&width=1920" alt="Fertilizer Ready Icon" loading="lazy" />
+          <span>Fertilizer Ready for Use</span>
+        </div>
+      </div>
+    </div>
+    <script>
+    // Highlight clicked or focused step and pause rotation
+
+    const inner = document.getElementById('rotatingInner');
+    const cells = document.querySelectorAll('.cell');
+    
+    cells.forEach(cell => {
+      cell.addEventListener('click', () => {
+        // Remove active from all
+        cells.forEach(c => c.classList.remove('active'));
+        // Add active on clicked
+        cell.classList.add('active');
+        // Pause rotation when clicked
+        inner.style.animationPlayState = 'paused';
+      });
+    
+      // Keyboard focus accessibility
+      cell.addEventListener('focus', () => {
+        cells.forEach(c => c.classList.remove('active'));
+        cell.classList.add('active');
+        inner.style.animationPlayState = 'paused';
+      });
+    
+      cell.addEventListener('blur', () => {
+        cell.classList.remove('active');
+        inner.style.animationPlayState = 'running';
+      });
+    });
+    
+  </script>
+  </section>
+  
+     
+  <section class="reviews-section">
+    <h2 class="section-title">Customer's <span>Review</span></h2>
+    <div class="reviews-container">
+      <!-- Review 1 -->
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">
+          "Thanks to EcoGaon, our village composting initiative has flourished. The organic fertilizer improved our crop yields drastically.        </p>
+        <div class="reviewer">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXZ73Na_oNmdAP06OtQiVHdsNoFIw1VwFCGg&s" width="30px" height="20px" alt="John Deo" class="reviewer-img">
+          <p class="reviewer-name">Ramesh Kumar</p>
+          <p class="reviewer-role">Farmer of Maharashtra</p>
+        </div>
+      </div>
+      <!-- Duplicate for other reviews -->
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">
+          "Our village's waste segregation process has become simpler and more efficient. EcoGaon's platform empowered us to go green!"
+        </p>
+        <div class="reviewer">
+          <img src="https://t3.ftcdn.net/jpg/02/42/15/52/360_F_242155243_TmXe26GFBHLlpUdAyKgrVVWhZlNPpbd8.jpg" width="30px" height="20px" alt="Jane Doe" class="reviewer-img">
+          <p class="reviewer-name">Sita Devii</p>
+          <p class="reviewer-role">Villager</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+    <footer>
+      <div class="footer-container">
+        <div class="footer-column">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="aboutus.html">About</a></li>
+            <li><a href="explore.html">Products</a></li>
+            <li><a href="mission.html">Mission</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Extra Links</h3>
+          <ul>
+            <li><a href="https://mansvijiwane.github.io/Projecthtml/home.html#">My Account</a></li>
+            <li><a href="https://mansvijiwane.github.io/Projecthtml/home.html#">My Order</a></li>
+            <li><a href="https://mansvijiwane.github.io/Projecthtml/home.html#">My Favorite</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Locations</h3>
+          <ul>
+            <li><a href="https://mansvijiwane.github.io/Projecthtml/home.html#">Nagpur</a></li>
+            <li><a href="https://mansvijiwane.github.io/Projecthtml/home.html#">Wardha</a></li>
+            <li><a href="https://mansvijiwane.github.io/Projecthtml/home.html#">Amravati</a></li>
+            <li><a href="https://mansvijiwane.github.io/Projecthtml/home.html#">Pune</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Contact Info</h3>
+          <ul>
+            <li>+123-456-7890</li>
+            <li><a href="mailto:teamecogaon@gmail.com">teamEcogaon@Gmail.Com</a></li>
+            <li>Nagpur, Maharashtra - 400104</li>
+          </ul>
+          
+        </div>
+      </div></footer>
+  </body></html>
