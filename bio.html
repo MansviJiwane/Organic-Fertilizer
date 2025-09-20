@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BioBloom Scanner</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      font-family: 'Poppins', sans-serif;
+      height: 100%;
+      background-color: #f9f9f9;
+      overflow-x: hidden;
+      color: #333;
+    }
+
+    /* Main Container */
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      width: 100%;
+      background: linear-gradient(135deg, #6e7dff, #4b5b9e);
+      overflow: hidden;
+    }
+
+    /* 3D Split-screen layout */
+    .split-screen {
+      display: flex;
+      width: 90%;
+      height: 80%;
+      box-shadow: 0px 15px 40px rgba(0, 0, 0, 0.1);
+      border-radius: 15px;
+      transform-style: preserve-3d;
+      animation: rotateIn 2s ease-in-out;
+    }
+
+    /* Left Section - Organic Fertilizer */
+    .left {
+      background: linear-gradient(135deg, #81c784, #4caf50);
+      flex: 1;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+      position: relative;
+      transform: perspective(600px) rotateY(0deg);
+      animation: slideInLeft 2s ease-out;
+    }
+
+    .left h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      font-weight: bold;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .left p {
+      font-size: 1rem;
+      line-height: 1.6;
+      text-align: center;
+      margin-bottom: 20px;
+      opacity: 0.9;
+    }
+
+    .left .interactive {
+      position: absolute;
+      bottom: 20px;
+      padding: 10px 25px;
+      background-color: rgba(0, 0, 0, 0.7);
+      border-radius: 25px;
+      color: white;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: all 0.3s;
+    }
+
+    .left .interactive:hover {
+      background-color: rgba(0, 0, 0, 0.9);
+    }
+
+    /* Right Section - Inorganic Fertilizer */
+    .right {
+      background: linear-gradient(135deg, #ff7043, #ff5722);
+      flex: 1;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+      position: relative;
+      transform: perspective(600px) rotateY(0deg);
+      animation: slideInRight 2s ease-out;
+    }
+
+    .right h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      font-weight: bold;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .right p {
+      font-size: 1rem;
+      line-height: 1.6;
+      text-align: center;
+      margin-bottom: 20px;
+      opacity: 0.9;
+    }
+
+    .right .interactive {
+      position: absolute;
+      bottom: 20px;
+      padding: 10px 25px;
+      background-color: rgba(0, 0, 0, 0.7);
+      border-radius: 25px;
+      color: white;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: all 0.3s;
+    }
+
+    .right .interactive:hover {
+      background-color: rgba(0, 0, 0, 0.9);
+    }
+
+    /* Modal for additional information */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: white;
+      padding: 30px;
+      width: 70%;
+      border-radius: 10px;
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-content h4 {
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+
+    .modal-content p {
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .modal-close {
+      text-align: right;
+      margin-top: 20px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: #FF7043;
+    }
+
+    .modal-close:hover {
+      text-decoration: underline;
+    }
+
+    /* Keyframe animations */
+    @keyframes rotateIn {
+      0% {
+        transform: rotateY(90deg);
+      }
+      100% {
+        transform: rotateY(0deg);
+      }
+    }
+
+    @keyframes slideInLeft {
+      0% {
+        transform: translateX(-100%);
+        opacity: 0;
+      }
+      100% {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideInRight {
+      0% {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      100% {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    /* 3D animation of the growth process */
+    .growth-container {
+      width: 80%;
+      height: 250px;
+      margin-top: 30px;
+      position: relative;
+      animation: growPlant 4s ease-in-out infinite;
+    }
+
+    .plant {
+      width: 50px;
+      height: 50px;
+      background-color: green;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      border-radius: 50%;
+      transform: translateX(-50%);
+    }
+
+    .plant.inorganic {
+      background-color: #ff7043;
+      animation: growInorganic 4s ease-in-out infinite;
+    }
+
+    @keyframes growPlant {
+      0% { transform: translateY(100%); }
+      50% { transform: translateY(0); }
+      100% { transform: translateY(100%); }
+    }
+
+    @keyframes growInorganic {
+      0% { transform: translateY(100%); }
+      50% { transform: translateY(0); }
+      100% { transform: translateY(100%); }
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Split-screen layout -->
+    <div class="split-screen">
+      <!-- Left Section - Organic Fertilizer -->
+      <div class="left">
+        <h2>Organic Fertilizer</h2>
+        <p>Organic fertilizers promote healthy microbial activity, increasing soil fertility and supporting sustainable growth. Beneficial bacteria like Rhizobium and Azotobacter work to fix nitrogen and enhance plant health.</p>
+        <div class="interactive" onclick="showModal('organic')">Learn More</div>
+        <div class="growth-container">
+          <div class="plant"></div>
+        </div>
+      </div>
+
+      <!-- Right Section - Inorganic Fertilizer -->
+      <div class="right">
+        <h2>Inorganic Fertilizer</h2>
+        <p>Inorganic fertilizers provide immediate nutrients to crops, but they disrupt soil health and reduce microbial diversity. Overuse leads to soil degradation and chemical residues in food.</p>
+        <div class="interactive" onclick="showModal('inorganic')">Learn More</div>
+        <div class="growth-container">
+          <div class="plant inorganic"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Content for Organic Fertilizer -->
+  <div id="organicModal" class="modal">
+    <div class="modal-content">
+      <h4>Advantages of Organic Fertilizer</h4>
+      <p>Organic fertilizers increase soil biodiversity by supporting microbes like Rhizobium, Azotobacter, and others. These microbes improve nitrogen fixation, reduce the need for chemical inputs, and help build long-term soil health.</p>
+      <div class="modal-close" onclick="closeModal('organic')">Close</div>
+    </div>
+  </div>
+
+  <!-- Modal Content for Inorganic Fertilizer -->
+  <div id="inorganicModal" class="modal">
+    <div class="modal-content">
+      <h4>Disadvantages of Inorganic Fertilizer</h4>
+      <p>Overusing inorganic fertilizers leads to soil acidification, depletion of beneficial microorganisms, and accumulation of toxic chemicals. This impacts plant health and can result in long-term environmental harm.</p>
+      <div class="modal-close" onclick="closeModal('inorganic')">Close</div>
+    </div>
+  </div>
+
+  <script>
+    // Function to display modals with content
+    function showModal(type) {
+      document.getElementById(type + 'Modal').style.display = 'flex';
+    }
+
+    // Function to close modals
+    function closeModal(type) {
+      document.getElementById(type + 'Modal').style.display = 'none';
+    }
+  </script>
+
+</body>
+</html>
