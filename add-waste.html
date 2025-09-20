@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Waste - Ecogaon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --green: #2E8B57;
+            --greenSoft: #7BBF6A;
+            --earth: #f4fff4;
+            --cta: #ff8c42;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f0fff4, #e6ffe6);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .header h1 {
+            color: var(--green);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--green);
+            font-weight: 600;
+        }
+        
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--green);
+        }
+        
+        .submit-btn {
+            width: 100%;
+            background: var(--green);
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            background: #228B22;
+            transform: translateY(-2px);
+        }
+        
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .alert {
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        
+        .alert.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .waste-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .waste-type {
+            background: var(--earth);
+            border: 2px solid transparent;
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .waste-type:hover {
+            border-color: var(--green);
+        }
+        
+        .waste-type.selected {
+            border-color: var(--green);
+            background: var(--greenSoft);
+        }
+        
+        .waste-type-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .waste-type-name {
+            font-weight: 600;
+            color: var(--green);
+        }
+        
+        .points-info {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .points-info h3 {
+            color: #856404;
+            margin-bottom: 0.5rem;
+        }
+        
+        .points-info p {
+            color: #856404;
+            margin: 0.25rem 0;
+        }
+        
+        .back-btn {
+            background: var(--cta);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .back-btn:hover {
+            background: #e67e22;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="Ecowallet.html" class="back-btn">← Back to Ecowallet</a>
+        
+        <div class="header">
+            <h1>🗑️ Add Waste</h1>
+            <p>Record your waste contribution and earn eco points!</p>
+        </div>
+        
+        <div id="alert" class="alert"></div>
+        
+        <form id="wasteForm" onsubmit="handleAddWaste(event)">
+            <div class="form-group">
+                <label for="userPhone">Your Phone Number</label>
+                <input type="tel" id="userPhone" placeholder="Enter your registered phone number" required>
+                <small style="color: #666;">Use the same phone number you used for registration</small>
+            </div>
+            
+            <div class="form-group">
+                <label for="location">Dumping Point Location</label>
+                <select id="location" required>
+                    <option value="">Select dumping point</option>
+                    <option value="Dumping Point 1 – Panchayat Office">Dumping Point 1 – Panchayat Office</option>
+                    <option value="Dumping Point 2 – Main Market">Dumping Point 2 – Main Market</option>
+                    <option value="Dumping Point 3 – Primary School">Dumping Point 3 – Primary School</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Waste Type</label>
+                <div class="waste-types">
+                    <div class="waste-type" onclick="selectWasteType('Kitchen Waste')">
+                        <div class="waste-type-icon">🥬</div>
+                        <div class="waste-type-name">Kitchen Waste</div>
+                    </div>
+                    <div class="waste-type" onclick="selectWasteType('Garden Waste')">
+                        <div class="waste-type-icon">🌿</div>
+                        <div class="waste-type-name">Garden Waste</div>
+                    </div>
+                    <div class="waste-type" onclick="selectWasteType('Mixed Organic')">
+                        <div class="waste-type-icon">♻️</div>
+                        <div class="waste-type-name">Mixed Organic</div>
+                    </div>
+                    <div class="waste-type" onclick="selectWasteType('Food Scraps')">
+                        <div class="waste-type-icon">🍎</div>
+                        <div class="waste-type-name">Food Scraps</div>
+                    </div>
+                </div>
+                <input type="hidden" id="wasteType" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="amount">Amount (in kg)</label>
+                <input type="number" id="amount" step="0.1" min="0.1" placeholder="e.g., 2.5" required>
+            </div>
+            
+            <div class="points-info">
+                <h3>💰 Points Information</h3>
+                <p><strong>Rate:</strong> 10 points per kg</p>
+                <p><strong>Your points:</strong> <span id="calculatedPoints">0</span> points</p>
+                <p><strong>Ecoscore boost:</strong> +<span id="ecoscoreBoost">0</span> points</p>
+            </div>
+            
+        
+            <div class="form-group">
+                <label for="verification">Verification Code</label>
+                <input type="text" id="verification" placeholder="Enter verification code from operator" required>
+                <small style="color: #666;">Only operators can generate valid codes</small>
+            </div>
+            
+            <button type="submit" class="submit-btn" id="submitBtn">Add Waste Contribution</button>
+        </form>
+    </div>
+
+    <script>
+        let selectedWasteType = '';
+        
+        function selectWasteType(type) {
+            selectedWasteType = type;
+            document.getElementById('wasteType').value = type;
+            
+            // Update visual selection
+            document.querySelectorAll('.waste-type').forEach(el => el.classList.remove('selected'));
+            event.target.closest('.waste-type').classList.add('selected');
+        }
+        
+        function calculatePoints() {
+            const amount = parseFloat(document.getElementById('amount').value) || 0;
+            const points = Math.round(amount * 10);
+            const ecoscoreBoost = Math.floor(amount / 10);
+            
+            document.getElementById('calculatedPoints').textContent = points;
+            document.getElementById('ecoscoreBoost').textContent = ecoscoreBoost;
+        }
+        
+        // Calculate points when amount changes
+        document.getElementById('amount').addEventListener('input', calculatePoints);
+        
+        function showAlert(message, type) {
+            const alert = document.getElementById('alert');
+            alert.textContent = message;
+            alert.className = `alert ${type}`;
+            alert.style.display = 'block';
+            
+            setTimeout(() => {
+                hideAlert();
+            }, 5000);
+        }
+        
+        function hideAlert() {
+            document.getElementById('alert').style.display = 'none';
+        }
+        
+        async function handleAddWaste(event) {
+            event.preventDefault();
+            
+            const userPhone = document.getElementById('userPhone').value;
+            const location = document.getElementById('location').value;
+            const amount = document.getElementById('amount').value;
+            const type = document.getElementById('wasteType').value;
+            const verification = document.getElementById('verification').value;
+            const operatorPhone = document.getElementById('operatorPhone').value;
+            
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.textContent = 'Adding waste...';
+            
+            try {
+                // First, get user by phone number
+                const userResponse = await fetch(`http://localhost:3000/api/user/${userPhone}`);
+                if (!userResponse.ok) {
+                    showAlert('User not found. Please register first or check your phone number.', 'error');
+                    return;
+                }
+                
+                const userData = await userResponse.json();
+                const userId = userData.id;
+                
+                console.log('Adding waste:', { userId, location, amount, type });
+                
+                const response = await fetch('http://localhost:3000/api/waste', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ userId, location, amount: parseFloat(amount), type, verification, operatorPhone })
+                });
+                
+                console.log('Response status:', response.status);
+                
+                let data;
+                try {
+                    data = await response.json();
+                } catch (parseError) {
+                    console.error('JSON parse error:', parseError);
+                    showAlert('Server response error. Please try again.', 'error');
+                    return;
+                }
+                
+                console.log('Response data:', data);
+                
+                if (response.ok) {
+                    showAlert(`Waste added successfully! You earned ${data.record.points} points.`, 'success');
+                    
+                    // Reset form
+                    document.getElementById('wasteForm').reset();
+                    document.querySelectorAll('.waste-type').forEach(el => el.classList.remove('selected'));
+                    selectedWasteType = '';
+                    calculatePoints();
+                    
+                    // Redirect to ecowallet after 2 seconds
+                    setTimeout(() => {
+                        window.location.href = 'Ecowallet.html';
+                    }, 2000);
+                } else {
+                    showAlert(data.error || 'Failed to add waste. Please try again.', 'error');
+                }
+            } catch (error) {
+                console.error('Add waste error:', error);
+                if (error.name === 'TypeError' && error.message.includes('fetch')) {
+                    showAlert('Cannot connect to server. Please make sure the server is running.', 'error');
+                } else {
+                    showAlert('Failed to add waste: ' + error.message, 'error');
+                }
+            }
+            
+            btn.disabled = false;
+            btn.textContent = 'Add Waste Contribution';
+        }
+        
+        // Load current user data if available
+        const userData = localStorage.getItem('ecogaon_user');
+        if (userData) {
+            const user = JSON.parse(userData);
+            document.getElementById('userPhone').value = user.phone;
+        }
+    </script>
+</body>
+</html>
