@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecowallet - Waste to Rewards</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --green: #2E8B57;
+            --greenSoft: #7BBF6A;
+            --earth: #f4fff4;
+            --cta: #ff8c42;
+            --gold: #FFD700;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f0fff4, #e6ffe6);
+            color: #0b2d16;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: var(--green);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        
+        .wallet-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 3px solid var(--green);
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: var(--earth);
+            border-radius: 15px;
+        }
+        
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+        
+        .user-details h2 {
+            color: var(--green);
+            margin-bottom: 0.5rem;
+        }
+        
+        .ecoscore {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--gold);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: 600;
+            color: #8B4513;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, var(--greenSoft), var(--green));
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .discount-section {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            border: 2px solid var(--gold);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .discount-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .discount-icon {
+            font-size: 3rem;
+        }
+        
+        .discount-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #8B4513;
+        }
+        
+        .discount-levels {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .discount-level {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .discount-level.active {
+            border-color: var(--green);
+            background: var(--earth);
+        }
+        
+        .level-title {
+            font-weight: 600;
+            color: var(--green);
+            margin-bottom: 0.5rem;
+        }
+        
+        .level-discount {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--cta);
+            margin-bottom: 0.5rem;
+        }
+        
+        .level-requirement {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .waste-history {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--green);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            transition: background 0.3s ease;
+        }
+        
+        .history-item:hover {
+            background: var(--earth);
+        }
+        
+        .history-item:last-child {
+            border-bottom: none;
+        }
+        
+        .waste-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .waste-icon {
+            font-size: 1.5rem;
+        }
+        
+        .waste-details h4 {
+            color: var(--green);
+            margin-bottom: 0.25rem;
+        }
+        
+        .waste-details p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .waste-amount {
+            font-weight: 600;
+            color: var(--green);
+        }
+        
+        .points-earned {
+            background: var(--gold);
+            color: #8B4513;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .leaderboard {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .leaderboard-item:hover {
+            background: var(--earth);
+        }
+        
+        .rank {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--green);
+            min-width: 30px;
+        }
+        
+        .rank.top3 {
+            color: var(--gold);
+        }
+        
+        .user-name {
+            flex: 1;
+            font-weight: 600;
+        }
+        
+        .user-waste {
+            color: var(--green);
+            font-weight: 600;
+        }
+        
+        .register-prompt {
+            background: linear-gradient(135deg, var(--green), var(--greenSoft));
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .register-prompt h3 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .register-btn {
+            background: var(--cta);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .register-btn:hover {
+            background: #e67e22;
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .wallet-card {
+                padding: 1rem;
+            }
+            
+            .user-info {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .discount-levels {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🌱 Ecowallet</h1>
+        <p>Track your waste contribution and earn organic fertilizer discounts</p>
+    </div>
+
+    <div class="container">
+        <!-- User Info Card -->
+        <div class="wallet-card" id="userCard" style="display: none;">
+            <div class="user-info">
+                <div class="avatar" id="userAvatar">👤</div>
+                <div class="user-details">
+                    <h2 id="userName">Loading...</h2>
+                    <p id="userPhone">Phone: Loading...</p>
+                    <div class="ecoscore">
+                        <span>🏆</span>
+                        <span>Ecoscore: <span id="userEcoscore">0</span>/100</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalWaste">0</div>
+                    <div class="stat-label">Total Waste (kg)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalPoints">0</div>
+                    <div class="stat-label">Eco Points</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="currentDiscount">0%</div>
+                    <div class="stat-label">Current Discount</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="rank">-</div>
+                    <div class="stat-label">Village Rank</div>
+                </div>
+            </div>
+
+            <!-- Discount Section -->
+            <div class="discount-section">
+                <div class="discount-header">
+                    <div class="discount-icon">🎁</div>
+                    <div>
+                        <div class="discount-title">Organic Fertilizer Discounts</div>
+                        <p>Earn discounts based on your waste contribution!</p>
+                    </div>
+                </div>
+                
+                <div class="discount-levels">
+                    <div class="discount-level" id="level1">
+                        <div class="level-title">Bronze Level</div>
+                        <div class="level-discount">5% OFF</div>
+                        <div class="level-requirement">0-50 kg waste</div>
+                    </div>
+                    <div class="discount-level" id="level2">
+                        <div class="level-title">Silver Level</div>
+                        <div class="level-discount">10% OFF</div>
+                        <div class="level-requirement">51-100 kg waste</div>
+                    </div>
+                    <div class="discount-level" id="level3">
+                        <div class="level-title">Gold Level</div>
+                        <div class="level-discount">15% OFF</div>
+                        <div class="level-requirement">101-200 kg waste</div>
+                    </div>
+                    <div class="discount-level" id="level4">
+                        <div class="level-title">Platinum Level</div>
+                        <div class="level-discount">25% OFF</div>
+                        <div class="level-requirement">200+ kg waste</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Waste History -->
+            <div class="waste-history">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h3 class="section-title">
+                        <span>📊</span>
+                        Recent Waste Contributions
+                    </h3>
+                    <a href="add-waste.html" style="background: var(--green); color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600;">+ Add Waste</a>
+                </div>
+                <div id="wasteHistory">
+                    <!-- History items will be populated here -->
+                </div>
+            </div>
+
+            <!-- Village Leaderboard -->
+            <div class="leaderboard">
+                <h3 class="section-title">
+                    <span>🏆</span>
+                    Village Leaderboard
+                </h3>
+                <div id="leaderboard">
+                    <!-- Leaderboard items will be populated here -->
+                </div>
+                <button id="logoutBtn">Logout</button>
+            </div>
+
+        </div>
+
+        <!-- Register Prompt -->
+        <div class="register-prompt" id="registerPrompt">
+            <h3>🚀 Start Your Eco Journey!</h3>
+            <p>Register now to track your waste contributions and earn organic fertilizer discounts. The more you contribute, the bigger your savings!</p>
+            <a href="login.html" class="register-btn">Register Now</a>
+
+           
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        const userData = localStorage.getItem('ecogaon_user');
+        const isLoggedIn = userData !== null;
+        
+        if (isLoggedIn) {
+            document.getElementById('userCard').style.display = 'block';
+            document.getElementById('registerPrompt').style.display = 'none';
+            loadUserData(JSON.parse(userData));
+        } else {
+            document.getElementById('userCard').style.display = 'none';
+            document.getElementById('registerPrompt').style.display = 'block';
+        }
+
+        // Sample data for demonstration
+        const sampleUser = {
+            name: "Ram Kumar",
+            phone: "+91 98765 43210",
+            ecoscore: 85,
+            totalWaste: 156.5,
+            totalPoints: 1565,
+            rank: 3
+        };
+
+        const sampleWasteHistory = [
+            { date: "2024-01-15", location: "Dumping Point 1", amount: 12.5, type: "Kitchen Waste", points: 125 },
+            { date: "2024-01-14", location: "Dumping Point 2", amount: 8.2, type: "Garden Waste", points: 82 },
+            { date: "2024-01-13", location: "Dumping Point 1", amount: 15.3, type: "Mixed Organic", points: 153 },
+            { date: "2024-01-12", location: "Dumping Point 3", amount: 6.7, type: "Kitchen Waste", points: 67 },
+            { date: "2024-01-11", location: "Dumping Point 1", amount: 11.8, type: "Garden Waste", points: 118 }
+        ];
+
+        const sampleLeaderboard = [
+            { name: "Sita Devi", waste: 245.2, rank: 1 },
+            { name: "Ramesh Singh", waste: 198.7, rank: 2 },
+            { name: "Ram Kumar", waste: 156.5, rank: 3 },
+            { name: "Amina Khan", waste: 134.8, rank: 4 },
+            { name: "Prem Chand", waste: 112.3, rank: 5 }
+        ];
+
+        function loadUserData(user) {
+            // Load user info
+            document.getElementById('userName').textContent = user.name;
+            document.getElementById('userPhone').textContent = `Phone: ${user.phone}`;
+            document.getElementById('userEcoscore').textContent = user.ecoscore;
+            document.getElementById('totalWaste').textContent = user.totalWaste;
+            document.getElementById('totalPoints').textContent = user.totalPoints;
+            document.getElementById('rank').textContent = `#${user.rank}`;
+
+            // Calculate discount level
+            const discountLevel = calculateDiscountLevel(user.totalWaste);
+            document.getElementById('currentDiscount').textContent = `${discountLevel.discount}%`;
+            
+            // Highlight current discount level
+            document.querySelectorAll('.discount-level').forEach(level => level.classList.remove('active'));
+            document.getElementById(`level${discountLevel.level}`).classList.add('active');
+
+            // Load waste history
+            loadWasteHistory(user.wasteHistory || []);
+            
+            // Load leaderboard
+            loadLeaderboard();
+        }
+
+        function calculateDiscountLevel(totalWaste) {
+            if (totalWaste >= 200) return { level: 4, discount: 25 };
+            if (totalWaste >= 101) return { level: 3, discount: 15 };
+            if (totalWaste >= 51) return { level: 2, discount: 10 };
+            return { level: 1, discount: 5 };
+        }
+
+        function loadWasteHistory(wasteHistory) {
+            const historyContainer = document.getElementById('wasteHistory');
+            historyContainer.innerHTML = '';
+
+            if (wasteHistory.length === 0) {
+                historyContainer.innerHTML = '<p style="text-align: center; color: #666; padding: 2rem;">No waste contributions yet. Start contributing to earn points!</p>';
+                return;
+            }
+
+            wasteHistory.forEach(entry => {
+                const historyItem = document.createElement('div');
+                historyItem.className = 'history-item';
+                historyItem.innerHTML = `
+                    <div class="waste-info">
+                        <div class="waste-icon">🗑️</div>
+                        <div class="waste-details">
+                            <h4>${entry.type}</h4>
+                            <p>${entry.date} • ${entry.location}</p>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div class="waste-amount">${entry.amount} kg</div>
+                        <div class="points-earned">+${entry.points} pts</div>
+                    </div>
+                `;
+                historyContainer.appendChild(historyItem);
+            });
+        }
+
+        async function loadLeaderboard() {
+            const leaderboardContainer = document.getElementById('leaderboard');
+            leaderboardContainer.innerHTML = '<p style="text-align: center; color: #666;">Loading leaderboard...</p>';
+
+            try {
+                const response = await fetch('http://localhost:3000/api/leaderboard');
+                const leaderboard = await response.json();
+                
+                leaderboardContainer.innerHTML = '';
+                
+                leaderboard.forEach(user => {
+                    const leaderboardItem = document.createElement('div');
+                    leaderboardItem.className = 'leaderboard-item';
+                    leaderboardItem.innerHTML = `
+                        <div class="rank ${user.rank <= 3 ? 'top3' : ''}">#${user.rank}</div>
+                        <div class="user-name">${user.name}</div>
+                        <div class="user-waste">${user.waste} kg</div>
+                    `;
+                    leaderboardContainer.appendChild(leaderboardItem);
+                });
+            } catch (error) {
+                leaderboardContainer.innerHTML = '<p style="text-align: center; color: #666;">Failed to load leaderboard</p>';
+            }
+        }
+
+        // Simulate real-time updates
+        setInterval(() => {
+            if (isLoggedIn) {
+                // Update ecoscore slightly for demo
+                const currentScore = parseInt(document.getElementById('userEcoscore').textContent);
+                const newScore = Math.min(100, currentScore + Math.floor(Math.random() * 3));
+                document.getElementById('userEcoscore').textContent = newScore;
+            }
+        }, 10000); // Update every 10 seconds
+        
+
+
+document.getElementById('logoutBtn').addEventListener('click', () => {
+    localStorage.removeItem('ecogaon_user');
+    window.location.href = 'index.html';  // Or jahan login/register page ho
+});
+
+
+    </script>
+</body>
+</html>
